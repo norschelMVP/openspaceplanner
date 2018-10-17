@@ -151,4 +151,11 @@
 			"expect(comp.isLoadingSessions).toBeFalsy();"
 		]
 	},
+	"WDC Verify http client": {
+		"scope": "typescript",
+		"prefix": "wdc-14",
+		"body": [
+			"sessionServiceMock.verify(s => s.get(typemoq.It.isValue(session.id)), typemoq.Times.once());"
+		]
+	}
 }

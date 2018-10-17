@@ -55,14 +55,7 @@ describe("SessionComponent", () => {
             providers: [
                 {provide: SessionService, useFactory: () => sessionServiceMock.object},
                 {provide: Router, useFactory: () => routerMock.object},
-                {provide: ActivatedRoute, useValue: {
-                    snapshot: {
-                        paramMap: {
-                            get: () => session.id
-                        }
-                    }
-                  }
-                }
+                // provide activated route (wdc-9)
             ]
         }).compileComponents();
     }));
@@ -73,12 +66,8 @@ describe("SessionComponent", () => {
         fixture.detectChanges();
     });
 
-    it("should create", () => {
-        expect(component).toBeTruthy();
-    });
-
     it("should get sessions", () => {
-        sessionServiceMock.verify(s => s.get(typemoq.It.isValue(session.id)), typemoq.Times.once());
+        // Verify http client get (wdc-13)
 
         expect(component.session).not.toBeNull();
         expect(component.session.id).toBe(session.id);
