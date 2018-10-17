@@ -6,7 +6,7 @@ import { of } from "rxjs";
 // mock signalr (wdc-10)
 
 describe("session service", () => {
-    it("get session should set it as the current session", async () => {
+    xit("get session should set it as the current session", async () => {
         // mock http client (wdc-11)
 
         // verify signalr call (wdc-12)

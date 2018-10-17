@@ -7,7 +7,7 @@ import { Topic } from "../models/topic";
 import * as moq from "typemoq";
 
 describe("session topic box", () => {
-    it("should set error message when there is one owner with two topics in the same slot", () => {
+    xit("should set error message when there is one owner with two topics in the same slot", () => {
         const session = new Session();
         session.topics.push(<Topic>{ owner: "Test", slotId: "1", roomId: "1" });
         session.topics.push(<Topic>{ owner: "Test", slotId: "1", roomId: "2" });
@@ -19,7 +19,7 @@ describe("session topic box", () => {
         // expect (wdc-3)
     });
 
-    it("should display error message when there are errors", () => {
+    xit("should display error message when there are errors", () => {
         const session = new Session();
         session.topics.push(<Topic>{ owner: "Test", slotId: "1", roomId: "1" });
         session.topics.push(<Topic>{ owner: "Test", slotId: "1", roomId: "2" });
@@ -36,7 +36,7 @@ describe("session topic box", () => {
         // expect display style to be empty (wdc-7)
     });
 
-    it("should set error message when there is one owner with two topics in the same slot (snapshot)", () => {
+    xit("should set error message when there is one owner with two topics in the same slot (snapshot)", () => {
         const session = new Session();
         session.topics.push(<Topic>{ owner: "Test", slotId: "1", roomId: "1" });
         session.topics.push(<Topic>{ owner: "Test", slotId: "1", roomId: "2" });
