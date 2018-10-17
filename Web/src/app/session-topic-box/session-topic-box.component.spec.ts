@@ -12,14 +12,11 @@ describe("session topic box", () => {
         session.topics.push(<Topic>{ owner: "Test", slotId: "1", roomId: "1" });
         session.topics.push(<Topic>{ owner: "Test", slotId: "1", roomId: "2" });
 
-        const sessionServiceMock = moq.Mock.ofType<SessionService>();
-        sessionServiceMock.setup(s => s.currentSession).returns(() => session);
+        // mock session service (wdc-1)
 
-        const comp = new SessionTopicBoxComponent(sessionServiceMock.object);
-        comp.topic = session.topics[0];
+        // create component and assign topic (wdc-2)
 
-        expect(comp.hasError).toBeTruthy();
-        expect(comp.errors[0]).toBe("Owner with two or more topics in the same slot.");
+        // expect (wdc-3)
     });
 
     it("should display error message when there are errors", () => {
@@ -30,26 +27,13 @@ describe("session topic box", () => {
         const sessionServiceMock = moq.Mock.ofType<SessionService>();
         sessionServiceMock.setup(s => s.currentSession).returns(() => session);
 
-        TestBed.configureTestingModule({
-            declarations: [
-                SessionTopicBoxComponent
-            ],
-            providers: [
-                { provide: SessionService, useFactory: () => sessionServiceMock.object }
-            ]
-        }).compileComponents();
+        // configure test bed (wdc-4)
 
-        const fixture = TestBed.createComponent(SessionTopicBoxComponent);
-        const debugElement = fixture.debugElement;
-        const comp = fixture.componentInstance;
-        comp.topic = session.topics[0];
+        // test bed create component (wdc-5)
 
-        fixture.detectChanges();
+        // query element (.topic-error -> parent) (wdc-6)
 
-        const errorContainerElement: HTMLElement
-            = debugElement.query(By.css(".topic-error")).parent.nativeElement;
-
-        expect(errorContainerElement.style.display).toBe("");
+        // expect display style to be empty (wdc-7)
     });
 
     it("should set error message when there is one owner with two topics in the same slot (snapshot)", () => {
@@ -75,6 +59,6 @@ describe("session topic box", () => {
 
         fixture.detectChanges();
 
-        expect(fixture.nativeElement).toMatchSnapshot();
+        // expect to match snapshot (wdc-8)
     });
 });

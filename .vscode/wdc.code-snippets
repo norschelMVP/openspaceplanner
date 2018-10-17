@@ -1,0 +1,154 @@
+{
+	// Place your global snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
+	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
+	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
+	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
+	// Placeholders with the same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"scope": "javascript,typescript",
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+	"WDC Mock Session Service": {
+		"scope": "typescript",
+		"prefix": "wdc-1",
+		"body": [
+			"const sessionServiceMock = moq.Mock.ofType<SessionService>();",
+			"sessionServiceMock.setup(s => s.currentSession).returns(() => session);"
+		]
+	},
+	"WDC Create Session Topic Box": {
+		"scope": "typescript",
+		"prefix": "wdc-2",
+		"body": [
+			"const comp = new SessionTopicBoxComponent(sessionServiceMock.object);",
+			"comp.topic = session.topics[0];"
+		]
+	},
+	"WDC Expect": {
+		"scope": "typescript",
+		"prefix": "wdc-3",
+		"body": [
+			"expect(comp.hasError).toBeTruthy();",
+			"expect(comp.errors[0]).toBe(\"Owner with two or more topics in the same slot.\");"
+		]
+	},
+	"WDC Configure Testing Bed": {
+		"scope": "typescript",
+		"prefix": "wdc-4",
+		"body": [
+			"TestBed.configureTestingModule({",
+			"   declarations: [",
+			"      SessionTopicBoxComponent",
+			"   ],",
+			"   providers: [",
+			"      { provide: SessionService, useFactory: () => sessionServiceMock.object }",
+			"   ]",
+			"}).compileComponents();"
+		]
+	},
+	"WDC Create Component Testbed": {
+		"scope": "typescript",
+		"prefix": "wdc-5",
+		"body": [
+			"const fixture = TestBed.createComponent(SessionTopicBoxComponent);",
+			"const debugElement = fixture.debugElement;",
+			"const comp = fixture.componentInstance;",
+			"comp.topic = session.topics[0];",
+			"",
+			"fixture.detectChanges();"
+		]
+	},
+	"WDC Get HTML Element": {
+		"scope": "typescript",
+		"prefix": "wdc-6",
+		"body": [
+			"const errorContainerElement: HTMLElement",
+            "   = debugElement.query(By.css(\".topic-error\")).parent.nativeElement;"
+		]
+	},
+	"WDC Expect HTML Element Style": {
+		"scope": "typescript",
+		"prefix": "wdc-7",
+		"body": [
+			"expect(errorContainerElement.style.display).toBe(\"\");"
+		]
+	},
+	"WDC Expect Snapshot": {
+		"scope": "typescript",
+		"prefix": "wdc-8",
+		"body": [
+			"expect(fixture.nativeElement).toMatchSnapshot();"
+		]
+	},
+	"WDC Activated Route": {
+		"scope": "typescript",
+		"prefix": "wdc-9",
+		"body": [
+			"{ provide: ActivatedRoute, useValue: {",
+			"   snapshot: {",
+			"      paramMap: {",
+			"         get: () => session.id",
+			"      }",
+			"   }",
+			"} }"
+		]
+	},
+	"WDC Import": {
+		"scope": "typescript",
+		"prefix": "wdc-10",
+		"body": [
+			"import { HubConnectionBuilder, HubConnection } from \"@aspnet/signalr\";",
+			"",
+			"const hubConnectionMock = typemoq.Mock.ofType<HubConnection>();",
+			"hubConnectionMock.setup(h => h.start()).returns(() => new Promise());",
+			"",
+			"const hubConnectionBuilderMock = typemoq.Mock.ofType<HubConnectionBuilder>();",
+			"hubConnectionBuilderMock.setup(h => h.withUrl(typemoq.It.isAny())).returns(() => hubConnectionBuilderMock.object);",
+			"hubConnectionBuilderMock.setup(h => h.build()).returns(() => hubConnectionMock.object);",
+			"",
+			"HubConnectionBuilder.prototype = hubConnectionBuilderMock.object;"
+		]
+	},
+	"WDC Mock Http Client": {
+		"scope": "typescript",
+		"prefix": "wdc-11",
+		"body": [
+			"const httpClientMock = typemoq.Mock.ofType<HttpClient>();",
+			"httpClientMock",
+			"   .setup(h => h.get(typemoq.It.is(s => s === \"/api/sessions/5\")))",
+			"   .returns(s => of(<Object>{ id: 5 }));",
+			"",
+			"const sessionService = new SessionService(httpClientMock.object);",
+			"const session = await sessionService.get(5);",
+			"",
+			"expect(sessionService.currentSession).toBe(session);"
+		]
+	},
+	"WDC Verify mock": {
+		"scope": "typescript",
+		"prefix": "wdc-12",
+		"body": [
+			"hubConnectionMock.verify(h => h.start(), typemoq.Times.once());"
+		]
+	},
+	"WDC Tick": {
+		"scope": "typescript",
+		"prefix": "wdc-13",
+		"body": [
+			"expect(comp.isLoadingSessions).toBeFalsy();",
+			"",
+			"tick(300);",
+			"expect(comp.isLoadingSessions).toBeTruthy();",
+			"",
+			"lastSessions$.next([]);",
+			"expect(comp.isLoadingSessions).toBeFalsy();"
+		]
+	},
+}
